@@ -1,0 +1,27 @@
+{
+  "name": "babymarkt/influxdb2-bundle",
+  "description": "Bundle service integration of official influxdata/influxdb-client-php client package",
+  "keywords": ["InfluxDB", "Symfony"],
+  "type": "symfony-bundle",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Niklas Funke",
+      "email": "funke@babymarkt.de"
+    }
+  ],
+  "require": {
+    "php": "^8.0",
+    "influxdata/influxdb-client-php": "^2.4",
+    "symfony/console": "^5.4.0 || ^6.0",
+    "symfony/framework-bundle": "^5.4.0 || ^6.0"
+  },
+  "require-dev": {
+    "phpunit/phpunit": "^9.5"
+  },
+  "autoload": {
+    "psr-4": {
+      "BabymarktExt\\InfluxDb2Bundle\\": "src"
+    }
+  }
+}
