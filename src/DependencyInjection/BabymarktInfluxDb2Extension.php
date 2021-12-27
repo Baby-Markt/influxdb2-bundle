@@ -7,7 +7,7 @@
  * via any medium is strictly prohibited.
  */
 
-namespace BabymarktExt\InfluxDb2Bundle\DependencyInjection;
+namespace Babymarkt\Symfony\InfluxDb2Bundle\DependencyInjection;
 
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
@@ -19,7 +19,7 @@ use Symfony\Component\HttpKernel\DependencyInjection\Extension;
  *
  * To learn more see {@link http://symfony.com/doc/current/cookbook/bundles/extension.html}
  */
-class BabymarktExtCronExtension extends Extension
+class BabymarktInfluxDb2Extension extends Extension
 {
     /**
      * {@inheritdoc}
@@ -33,21 +33,22 @@ class BabymarktExtCronExtension extends Extension
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__ . '/../Resources/config'));
         $loader->load('services.yml');
 
-        // Define cron block id if not set.
-        $id = $config['options']['id'] ?: sprintf(
-            '%s:%s',
-            $container->getParameter('kernel.project_dir'),
-            $container->getParameter('kernel.environment')
-        );
+        foreach ($config['connections'] as &$value) {
+            if (!array_key_exists('allow_redirects', $value)) {
+                $value['allow_redirects'] = ['enabled' => true];
+            }
+            $value['allow_redirects'] = match ($value['allow_redirects']['enabled']) {
+                false => false,
+                true => true,
+                default => (function ($allowRedirects) {
+                    unset($allowRedirects['enabled']);
+                    return $allowRedirects;
+                })($value['allow_redirects'])
+            };
 
-        // Define the working dir.
-        $workingDir = $config['options']['working_dir'] ?? $container->getParameter('kernel.project_dir');
+        }
 
-        $container->setParameter('babymarkt_ext_influxdb2.definitions', $config['cronjobs']);
-        $container->setParameter('babymarkt_ext_influxdb2.options.output', $config['options']['output']);
-        $container->setParameter('babymarkt_ext_influxdb2.options.crontab', $config['options']['crontab']);
-        $container->setParameter('babymarkt_ext_influxdb2.options.script', $config['options']['script']);
-        $container->setParameter('babymarkt_ext_influxdb2.options.working_dir', $workingDir);
-        $container->setParameter('babymarkt_ext_influxdb2.options.id', $id);
+        $container->setParameter('babymarkt_influxdb2.default_connection', $config['default_connection']);
+        $container->setParameter('babymarkt_influxdb2.connections', $config['connections']);
     }
 }

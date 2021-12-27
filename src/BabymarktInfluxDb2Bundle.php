@@ -7,10 +7,10 @@
  * via any medium is strictly prohibited.
  */
 
-namespace BabymarktExt\InfluxDb2Bundle;
+namespace Babymarkt\Symfony\InfluxDb2Bundle;
 
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
-class BabymarktExtInfluxDb2Bundle extends Bundle
+class BabymarktInfluxDb2Bundle extends Bundle
 {
 }
