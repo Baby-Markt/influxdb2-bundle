@@ -25,5 +25,8 @@
     "psr-4": {
       "Babymarkt\\Symfony\\InfluxDb2Bundle\\": "src"
     }
+  },
+  "scripts": {
+    "test": "vendor/bin/phpunit"
   }
 }
