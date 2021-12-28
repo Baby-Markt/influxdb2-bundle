@@ -42,6 +42,13 @@ class BabymarktInfluxDb2ExtensionTest extends TestCase
         $this->assertTrue($this->container->has($this->root . 'default_client'));
     }
 
+    public function testWithoutConfiguration()
+    {
+        $config = [];
+        $this->extension->load([$config], $this->container);
+        $this->assertFalse($this->container->has($this->root . 'default_client'));
+    }
+
     public function testDisableAllowRedirects()
     {
         $config = [

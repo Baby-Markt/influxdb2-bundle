@@ -38,14 +38,16 @@ class BabymarktInfluxDb2Extension extends Extension
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__ . '/../Resources/config'));
         $loader->load('services.yml');
 
-        $config = $this->normalizeConfiguration($config);
+        if (isset($config['client'])) {
+            $config = $this->normalizeConfiguration($config);
 
-        $this->buildClients(container: $container, config: $config['client']);
-        $this->buildWriteApi(container: $container, config: $config['api']['write']);
+            $this->buildClients(container: $container, config: $config['client']);
+            $this->buildWriteApi(container: $container, config: $config['api']['write']);
 
-        $container->setParameter('babymarkt_influxdb2.client.default_connection', $config['client']['default_connection']);
-        $container->setParameter('babymarkt_influxdb2.client.connections', $config['client']['connections']);
-        $container->setParameter('babymarkt_influxdb2.api.write', $config['api']['write']);
+            $container->setParameter('babymarkt_influxdb2.client.default_connection', $config['client']['default_connection']);
+            $container->setParameter('babymarkt_influxdb2.client.connections', $config['client']['connections']);
+            $container->setParameter('babymarkt_influxdb2.api.write', $config['api']['write']);
+        }
     }
 
     protected function buildClients(ContainerBuilder $container, array $config)
