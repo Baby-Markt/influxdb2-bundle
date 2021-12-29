@@ -47,6 +47,7 @@ class BabymarktInfluxDb2ExtensionTest extends TestCase
         $config = [];
         $this->extension->load([$config], $this->container);
         $this->assertFalse($this->container->has($this->root . 'default_client'));
+        $this->assertFalse($this->container->has($this->root . 'default_query_api'));
     }
 
     public function testDisableAllowRedirects()
@@ -129,6 +130,8 @@ class BabymarktInfluxDb2ExtensionTest extends TestCase
         $this->assertEquals('c1', $defaultConnection);
         $this->assertTrue($this->container->has($this->root . 'c1_client'));
         $this->assertTrue($this->container->has($this->root . 'c2_client'));
+        $this->assertTrue($this->container->has($this->root . 'c1_query_api'));
+        $this->assertTrue($this->container->has($this->root . 'c2_query_api'));
 
     }
 

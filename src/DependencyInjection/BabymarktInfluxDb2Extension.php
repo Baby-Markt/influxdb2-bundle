@@ -10,6 +10,7 @@
 namespace Babymarkt\Symfony\InfluxDb2Bundle\DependencyInjection;
 
 use InfluxDB2\Client;
+use InfluxDB2\QueryApi;
 use InfluxDB2\WriteApi;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\Alias;
@@ -26,6 +27,11 @@ use Symfony\Component\HttpKernel\DependencyInjection\Extension;
  */
 class BabymarktInfluxDb2Extension extends Extension
 {
+    public function getAlias(): string
+    {
+        return 'babymarkt_influxdb2';
+    }
+
     /**
      * {@inheritdoc}
      * @throws \Exception
@@ -84,6 +90,9 @@ class BabymarktInfluxDb2Extension extends Extension
 
         $serviceId = sprintf('babymarkt_influxdb2.%s_client', $name);
         $container->setDefinition($serviceId, $definition);
+
+        // Each client needs a corresponding query api.
+        $this->buildQueryApi($container, $name, $serviceId);
     }
 
     /**
@@ -105,6 +114,24 @@ class BabymarktInfluxDb2Extension extends Extension
             $serviceId = sprintf('babymarkt_influxdb2.%s_write_api', $setName);
             $container->setDefinition($serviceId, $definition);
         }
+    }
+
+    /**
+     * Creates an query api service definition.
+     * @param ContainerBuilder $container
+     * @param string $clientName
+     * @param string $clientServiceId
+     * @return void
+     */
+    protected function buildQueryApi(ContainerBuilder $container, string $clientName, string $clientServiceId)
+    {
+        $definition = (new Definition(QueryApi::class))
+            ->setFactory([new Reference($clientServiceId), 'createQueryApi'])
+            ->setPublic(true)
+            ->setLazy(true);
+
+        $serviceId = sprintf('babymarkt_influxdb2.%s_query_api', $clientName);
+        $container->setDefinition($serviceId, $definition);
     }
 
     /**
