@@ -47,7 +47,7 @@ jobs:
     - name: Upload coverage file
       uses: actions/upload-artifact@v2
       with:
-        name: phpunit-${{ matrix.php-version }}-coverage
+        name: phpunit-php${{ matrix.php_version }}-coverage
         path: coverage*.xml
 
   upload_coverage:
