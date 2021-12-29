@@ -3,6 +3,4 @@ services:
     autowire: true
     autoconfigure: true
 
-  Babymarkt\Symfony\InfluxDb2Bundle\InfluxDb\ClientFactory:
-
 

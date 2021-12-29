@@ -7,11 +7,10 @@
  * via any medium is strictly prohibited.
  */
 
-namespace Babymarkt\Symfony\InfluxDb2Bundle\DependencyInjection;
+namespace Babymarkt\Symfony\Influxdb2Bundle\DependencyInjection;
 
 use InfluxDB2\Model\WritePrecision;
-use InfluxDB2\WriteType;use Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition;
-use Symfony\Component\Config\Definition\Builder\NodeDefinition;
+use Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
 

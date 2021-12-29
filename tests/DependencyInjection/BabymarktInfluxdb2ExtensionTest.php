@@ -2,21 +2,21 @@
 
 namespace DependencyInjection;
 
-use Babymarkt\Symfony\InfluxDb2Bundle\DependencyInjection\BabymarktInfluxDb2Extension;
+use Babymarkt\Symfony\Influxdb2Bundle\DependencyInjection\BabymarktInfluxdb2Extension;
 use InfluxDB2\WriteType;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\DependencyInjection\Container;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 
-class BabymarktInfluxDb2ExtensionTest extends TestCase
+class BabymarktInfluxdb2ExtensionTest extends TestCase
 {
-    protected BabymarktInfluxDb2Extension $extension;
+    protected BabymarktInfluxdb2Extension $extension;
     protected Container $container;
     protected string $root;
 
     protected function setUp(): void
     {
-        $this->extension = new BabymarktInfluxDb2Extension();
+        $this->extension = new BabymarktInfluxdb2Extension();
         $this->container = new ContainerBuilder();
         $this->root      = 'babymarkt_influxdb2.';
 

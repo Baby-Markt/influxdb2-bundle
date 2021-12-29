@@ -7,7 +7,7 @@
  * via any medium is strictly prohibited.
  */
 
-namespace Babymarkt\Symfony\InfluxDb2Bundle\DependencyInjection;
+namespace Babymarkt\Symfony\Influxdb2Bundle\DependencyInjection;
 
 use InfluxDB2\Client;
 use InfluxDB2\QueryApi;
@@ -25,13 +25,8 @@ use Symfony\Component\HttpKernel\DependencyInjection\Extension;
  *
  * To learn more see {@link http://symfony.com/doc/current/cookbook/bundles/extension.html}
  */
-class BabymarktInfluxDb2Extension extends Extension
+class BabymarktInfluxdb2Extension extends Extension
 {
-    public function getAlias(): string
-    {
-        return 'babymarkt_influxdb2';
-    }
-
     /**
      * {@inheritdoc}
      * @throws \Exception
@@ -53,6 +48,7 @@ class BabymarktInfluxDb2Extension extends Extension
         $this->buildClients(container: $container, config: $config['client']);
         $this->buildWriteApi(container: $container, config: $config['api']['write']);
 
+        // Todo remove it
         $container->setParameter('babymarkt_influxdb2.client.default_connection', $config['client']['default_connection']);
         $container->setParameter('babymarkt_influxdb2.client.connections', $config['client']['connections']);
         $container->setParameter('babymarkt_influxdb2.api.write', $config['api']['write']);
@@ -195,11 +191,11 @@ class BabymarktInfluxDb2Extension extends Extension
      */
     protected function camelizeArrayKeys(array $array, string $separator = '_'): array
     {
-        $camelizedArray = [];
+        $camelCasedArray = [];
         foreach ($array as $key => $value) {
-            $key                  = lcfirst(str_replace($separator, '', ucwords($key, $separator)));
-            $camelizedArray[$key] = $value;
+            $key                   = lcfirst(str_replace($separator, '', ucwords($key, $separator)));
+            $camelCasedArray[$key] = $value;
         }
-        return $camelizedArray;
+        return $camelCasedArray;
     }
 }
