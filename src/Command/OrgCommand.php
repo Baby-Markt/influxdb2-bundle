@@ -43,10 +43,10 @@ class OrgCommand extends Command
         $client = $this->registry->getClient($clientName);
 
         $io = new SymfonyStyle($input, $output);
-        $io->writeln('Not implemented yet!');
 
         /** @var OrganizationsService $orgService */
         $orgService = $client->createService(OrganizationsService::class);
+        $orgService->getConfig()->setHost($client->getConfiguration()->getHost());
 
         $table = $io->createTable();
         $table->setHeaderTitle('All organisations')
