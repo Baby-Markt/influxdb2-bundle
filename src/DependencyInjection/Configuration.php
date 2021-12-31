@@ -6,6 +6,7 @@
  * and is protected by copyright law. Unauthorized copying of this file or any parts,
  * via any medium is strictly prohibited.
  */
+declare(strict_types=1);
 
 namespace Babymarkt\Symfony\Influxdb2Bundle\DependencyInjection;
 

@@ -3,4 +3,16 @@ services:
     autowire: true
     autoconfigure: true
 
+  Babymarkt\Symfony\Influxdb2Bundle\Command\:
+    resource: '../../Command/'
+    tags: [ { name: console.command } ]
 
+  Babymarkt\Symfony\Influxdb2Bundle\InfluxDb\ClientRegistry: ~
+  babymarkt_influxdb2.client_registry: '@Babymarkt\Symfony\Influxdb2Bundle\InfluxDb\ClientRegistry'
+
+  Babymarkt\Symfony\Influxdb2Bundle\InfluxDb\ApiRegistry: ~
+  babymarkt_influxdb2.api_registry: '@Babymarkt\Symfony\Influxdb2Bundle\InfluxDb\ApiRegistry'
+
+  InfluxDB2\Client: '@babymarkt_influxdb2.default_client'
+  InfluxDB2\WriteApi: '@babymarkt_influxdb2.default_write_api'
+  InfluxDB2\QueryApi: '@babymarkt_influxdb2.default_query_api'

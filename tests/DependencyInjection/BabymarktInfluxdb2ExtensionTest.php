@@ -230,6 +230,4 @@ class BabymarktInfluxdb2ExtensionTest extends TestCase
         $this->assertEquals(WriteType::BATCHING, $optionSets[$defaultName]['options']['writeType']);
         $this->assertEquals(123, $optionSets[$defaultName]['options']['extraKey']);
     }
-
-
 }

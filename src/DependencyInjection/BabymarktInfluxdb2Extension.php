@@ -6,6 +6,7 @@
  * and is protected by copyright law. Unauthorized copying of this file or any parts,
  * via any medium is strictly prohibited.
  */
+declare(strict_types=1);
 
 namespace Babymarkt\Symfony\Influxdb2Bundle\DependencyInjection;
 
@@ -27,6 +28,8 @@ use Symfony\Component\HttpKernel\DependencyInjection\Extension;
  */
 class BabymarktInfluxdb2Extension extends Extension
 {
+    protected const PREFIX = 'babymarkt_influxdb2.';
+
     /**
      * {@inheritdoc}
      * @throws \Exception
@@ -45,27 +48,42 @@ class BabymarktInfluxdb2Extension extends Extension
 
         $config = $this->normalizeConfiguration($config);
 
-        $this->buildClients(container: $container, config: $config['client']);
-        $this->buildWriteApi(container: $container, config: $config['api']['write']);
+        $this->buildClientDefinitions(container: $container, config: $config['client']);
+        $this->buildWriteApiDefinitions(container: $container, config: $config['api']['write']);
 
         // Todo remove it
-        $container->setParameter('babymarkt_influxdb2.client.default_connection', $config['client']['default_connection']);
-        $container->setParameter('babymarkt_influxdb2.client.connections', $config['client']['connections']);
-        $container->setParameter('babymarkt_influxdb2.api.write', $config['api']['write']);
+        $container->setParameter(self::PREFIX . 'client.default_connection', $config['client']['default_connection']);
+        $container->setParameter(self::PREFIX . 'client.connections', $config['client']['connections']);
+        $container->setParameter(self::PREFIX . 'api.write', $config['api']['write']);
     }
 
-    protected function buildClients(ContainerBuilder $container, array $config)
+    /**
+     * @param ContainerBuilder $container
+     * @param array $config
+     * @return void
+     */
+    protected function buildClientDefinitions(ContainerBuilder $container, array $config)
     {
         foreach ($config['connections'] as $name => $options) {
-            $this->createClientService(container: $container, name: $name, options: $options);
+            $definition = (new Definition(class: Client::class, arguments: [$options]))
+                ->setPublic(false)
+                ->setLazy(true)
+                ->addTag(self::PREFIX . 'client');
+
+            $serviceId = sprintf(self::PREFIX . '%s_client', $name);
+            $container->setDefinition($serviceId, $definition);
+
+            // Each client needs a corresponding query api.
+            $this->buildQueryApiDefinition($container, $name, $serviceId);
         }
 
         // Create the alias for the default client service.
-        if (!$container->hasDefinition('babymarkt_influxdb2.default_client')) {
+        $defaultClientId = self::PREFIX . 'default_client';
+        if (!$container->hasDefinition($defaultClientId)) {
             $container->setAlias(
-                alias: 'babymarkt_influxdb2.default_client',
+                alias: $defaultClientId,
                 id: new Alias(
-                    id: sprintf('babymarkt_influxdb2.%s_client', $config['default_connection']),
+                    id: sprintf(self::PREFIX . '%s_client', $config['default_connection']),
                     public: true
                 )
             );
@@ -73,60 +91,41 @@ class BabymarktInfluxdb2Extension extends Extension
     }
 
     /**
-     * Creates the client service definitions.
-     * @param string $name
-     * @param array $options
-     * @return void
-     */
-    protected function createClientService(ContainerBuilder $container, string $name, array $options)
-    {
-        $definition = (new Definition(class: Client::class, arguments: [$options]))
-            ->setPublic(false)
-            ->setLazy(true);
-
-        $serviceId = sprintf('babymarkt_influxdb2.%s_client', $name);
-        $container->setDefinition($serviceId, $definition);
-
-        // Each client needs a corresponding query api.
-        $this->buildQueryApi($container, $name, $serviceId);
-    }
-
-    /**
-     * Creates the write api service.
+     * Creates the write-api service.
      * @param ContainerBuilder $container
      * @param array $config
      * @return void
      */
-    protected function buildWriteApi(ContainerBuilder $container, array $config)
+    protected function buildWriteApiDefinitions(ContainerBuilder $container, array $config)
     {
         foreach ($config['option_sets'] as $setName => $optionSet) {
             $connectionName = $optionSet['connection'];
-            $clientId       = sprintf('babymarkt_influxdb2.%s_client', $connectionName);
+            $clientId       = sprintf(self::PREFIX . '%s_client', $connectionName);
             $definition     = (new Definition(class: WriteApi::class, arguments: $optionSet['options']))
                 ->setFactory([new Reference($clientId), 'createWriteApi'])
                 ->setPublic(true)
                 ->setLazy(true);
 
-            $serviceId = sprintf('babymarkt_influxdb2.%s_write_api', $setName);
+            $serviceId = sprintf(self::PREFIX . '%s_write_api', $setName);
             $container->setDefinition($serviceId, $definition);
         }
     }
 
     /**
-     * Creates an query api service definition.
+     * Creates an query-api service definition.
      * @param ContainerBuilder $container
      * @param string $clientName
      * @param string $clientServiceId
      * @return void
      */
-    protected function buildQueryApi(ContainerBuilder $container, string $clientName, string $clientServiceId)
+    protected function buildQueryApiDefinition(ContainerBuilder $container, string $clientName, string $clientServiceId)
     {
         $definition = (new Definition(QueryApi::class))
             ->setFactory([new Reference($clientServiceId), 'createQueryApi'])
             ->setPublic(true)
             ->setLazy(true);
 
-        $serviceId = sprintf('babymarkt_influxdb2.%s_query_api', $clientName);
+        $serviceId = sprintf(self::PREFIX . '%s_query_api', $clientName);
         $container->setDefinition($serviceId, $definition);
     }
 
