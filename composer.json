@@ -1,7 +1,7 @@
 {
   "name": "babymarkt/influxdb2-bundle",
   "description": "Bundle service integration of official influxdata/influxdb-client-php client package",
-  "keywords": ["InfluxDB", "Symfony"],
+  "keywords": ["InfluxDB2", "Symfony"],
   "type": "symfony-bundle",
   "license": "MIT",
   "authors": [

@@ -2,7 +2,7 @@
 
 namespace Babymarkt\Symfony\Influxdb2Bundle\Command;
 
-use Babymarkt\Symfony\Influxdb2Bundle\InfluxDb\ClientRegistry;
+use Babymarkt\Symfony\Influxdb2Bundle\Registry\ClientRegistry;
 use InfluxDB2\Service\OrganizationsService;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;

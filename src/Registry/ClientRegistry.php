@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace Babymarkt\Symfony\Influxdb2Bundle\InfluxDb;
+namespace Babymarkt\Symfony\Influxdb2Bundle\Registry;
 
 use InfluxDB2\Client;
 
@@ -17,6 +17,12 @@ class ClientRegistry
      */
     public function addClient(string $id, Client $client): void
     {
+        if (str_starts_with($id, "babymarkt_influxdb2.")) {
+            if (preg_match('#babymarkt_influxdb2\.([^\s]+?)_client#is', $id, $matches)) {
+                $id = $matches[1];
+            }
+        }
+
         $this->clientClosures[$id] = $client;
     }
 
@@ -37,10 +43,10 @@ class ClientRegistry
     public function getClient(string $name): Client
     {
         if (!$this->hasClient($name)) {
-            throw new \InvalidArgumentException(sprintf('Client "%s" not found', $name));
+            throw new ClientNotFoundException(sprintf('Client "%s" not found', $name));
         }
 
-        return $this->clientClosures[$name]();
+        return $this->clientClosures[$name];
     }
 
 }

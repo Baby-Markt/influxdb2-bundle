@@ -4,7 +4,7 @@ namespace DependencyInjection\Compiler;
 
 use Babymarkt\Symfony\Influxdb2Bundle\DependencyInjection\BabymarktInfluxdb2Extension;
 use Babymarkt\Symfony\Influxdb2Bundle\DependencyInjection\Compiler\ClientRegistryPass;
-use Babymarkt\Symfony\Influxdb2Bundle\InfluxDb\ClientRegistry;
+use Babymarkt\Symfony\Influxdb2Bundle\Registry\ClientRegistry;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\DependencyInjection\Alias;

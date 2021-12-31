@@ -3,7 +3,7 @@
 namespace DependencyInjection\Compiler;
 
 use Babymarkt\Symfony\Influxdb2Bundle\DependencyInjection\Compiler\ApiRegistryPass;
-use Babymarkt\Symfony\Influxdb2Bundle\InfluxDb\ApiRegistry;
+use Babymarkt\Symfony\Influxdb2Bundle\Registry\ApiRegistry;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\DependencyInjection\Alias;

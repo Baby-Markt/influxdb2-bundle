@@ -2,7 +2,7 @@
 
 namespace Babymarkt\Symfony\Influxdb2Bundle\DependencyInjection\Compiler;
 
-use Babymarkt\Symfony\Influxdb2Bundle\InfluxDb\ClientRegistry;
+use Babymarkt\Symfony\Influxdb2Bundle\Registry\ClientRegistry;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Reference;

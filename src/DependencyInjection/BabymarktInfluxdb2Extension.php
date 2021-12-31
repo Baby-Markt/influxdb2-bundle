@@ -39,12 +39,12 @@ class BabymarktInfluxdb2Extension extends Extension
         $configuration = new Configuration();
         $config        = $this->processConfiguration($configuration, $configs);
 
-        $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__ . '/../Resources/config'));
-        $loader->load('services.yml');
-
         if (empty($config['client'])) {
             return;
         }
+
+        $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__ . '/../Resources/config'));
+        $loader->load('services.yml');
 
         $config = $this->normalizeConfiguration($config);
 
