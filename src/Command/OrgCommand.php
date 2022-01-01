@@ -55,7 +55,7 @@ class OrgCommand extends Command
             $table->addRow([
                 $org->getName(),
                 $org->getId(),
-                $org->getCreatedAt(),
+                $org->getCreatedAt()->format('Y-m-d H:i:s'),
                 $org->getDescription()
             ]);
         }
