@@ -98,7 +98,7 @@ class Configuration implements ConfigurationInterface
                                         ->info('The number of seconds to wait while trying to connect to a server. Use 0 to wait indefinitely.')
                                     ->end()
                                     ->scalarNode('proxy')
-                                        ->defaultValue(10)
+                                        ->defaultNull()
                                         ->info('Pass a string to specify an HTTP proxy, or an array to specify different proxies for different protocols.')
                                     ->end()
                                     ->arrayNode('allow_redirects')
