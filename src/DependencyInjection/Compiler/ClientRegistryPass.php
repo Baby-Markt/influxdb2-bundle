@@ -23,5 +23,14 @@ class ClientRegistryPass implements CompilerPassInterface
         foreach ($taggedClients as $id => $tags) {
             $definition->addMethodCall('addClient', [$id, new Reference($id)]);
         }
+
+        // Find default alias and add a reference to the default client too.
+        $defaultClientId = 'babymarkt_influxdb2.default_client';
+        if ($container->hasAlias($defaultClientId)) {
+            $alias = $container->getAlias($defaultClientId);
+            $id = (string)$alias;
+            $definition->addMethodCall('addClient', ['default', new Reference($id)]);
+        }
+
     }
 }

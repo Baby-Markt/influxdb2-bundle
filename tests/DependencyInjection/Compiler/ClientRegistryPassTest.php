@@ -2,7 +2,6 @@
 
 namespace DependencyInjection\Compiler;
 
-use Babymarkt\Symfony\Influxdb2Bundle\DependencyInjection\BabymarktInfluxdb2Extension;
 use Babymarkt\Symfony\Influxdb2Bundle\DependencyInjection\Compiler\ClientRegistryPass;
 use Babymarkt\Symfony\Influxdb2Bundle\Registry\ClientRegistry;
 use PHPUnit\Framework\MockObject\MockObject;
@@ -42,7 +41,7 @@ class ClientRegistryPassTest extends TestCase
         $definition = (new Definition(\stdClass::class))
             ->setPublic(true)
             ->addTag('babymarkt_influxdb2.client');
-        $serviceId = 'some_service';
+        $serviceId  = 'some_service';
         $this->container->setDefinition($serviceId, $definition);
 
         $this->definition->expects($this->once())
@@ -77,4 +76,48 @@ class ClientRegistryPassTest extends TestCase
         $compilerPass->process($containerStub);
 
     }
+
+    public function testProcessWithAliasForDefaultClient()
+    {
+        $containerStub = $this->getMockBuilder(ContainerBuilder::class)
+            ->disableOriginalConstructor()
+            ->onlyMethods(['hasAlias', 'getAlias', 'has', 'findDefinition', 'findTaggedServiceIds'])
+            ->getMock();
+
+        $containerStub->expects($this->once())
+            ->method('has')
+            ->with(ClientRegistry::class)
+            ->willReturn(true);
+
+        $containerStub->expects($this->once())
+            ->method('findDefinition')
+            ->with(ClientRegistry::class)
+            ->willReturn($this->definition);
+
+        $containerStub->expects($this->once())
+            ->method('findTaggedServiceIds')
+            ->willReturn([]);
+
+        $containerStub->expects($this->once())
+            ->method('hasAlias')
+            ->willReturn(true);
+
+        $containerStub->expects($this->once())
+            ->method('getAlias')
+            ->willReturn(new Alias('some-service'));
+
+        $this->definition->expects($this->once())
+            ->method('addMethodCall')
+            ->with(
+                $this->equalTo('addClient'),
+                $this->callback(static function ($v) {
+                    return $v[0] === 'default' && $v[1] instanceof Reference;
+                })
+            );
+
+        $compilerPass = new ClientRegistryPass();
+        $compilerPass->process($containerStub);
+    }
+
+
 }
