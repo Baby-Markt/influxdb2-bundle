@@ -51,7 +51,7 @@ class BabymarktInfluxdb2Extension extends Extension
         $this->buildClientDefinitions(container: $container, config: $config['client']);
         $this->buildWriteApiDefinitions(container: $container, config: $config['api']['write']);
 
-        // Todo remove it
+        /* @todo We should remove this parameters. Currently, they are only used by unit tests. */
         $container->setParameter(self::PREFIX . 'client.default_connection', $config['client']['default_connection']);
         $container->setParameter(self::PREFIX . 'client.connections', $config['client']['connections']);
         $container->setParameter(self::PREFIX . 'api.write', $config['api']['write']);

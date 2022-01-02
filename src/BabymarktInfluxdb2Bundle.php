@@ -11,13 +11,17 @@ use Symfony\Component\HttpKernel\Bundle\Bundle;
 
 class BabymarktInfluxdb2Bundle extends Bundle
 {
-    public function build(ContainerBuilder $container)
+    /**
+     * @codeCoverageIgnore
+     * @param ContainerBuilder $container
+     * @return void
+     */
+    public function build(ContainerBuilder $container): void
     {
         parent::build($container);
 
         $container->addCompilerPass(new ClientRegistryPass());
         $container->addCompilerPass(new ApiRegistryPass());
     }
-
 
 }
