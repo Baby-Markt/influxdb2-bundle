@@ -10,8 +10,9 @@
       "email": "funke@babymarkt.de"
     }
   ],
+  "minimum-stability": "stable",
   "require": {
-    "php": "^8.0",
+    "php": ">=8.0",
     "influxdata/influxdb-client-php": "^2.4",
     "symfony/console": "^5.4.0 || ^6.0",
     "symfony/framework-bundle": "^5.4.0 || ^6.0",
