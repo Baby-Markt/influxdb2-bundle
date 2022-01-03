@@ -13,7 +13,7 @@
          failOnWarning="true"
          verbose="true">
     <testsuites>
-        <testsuite name="default">
+        <testsuite name="babymarkt/influxdb2-bundle">
             <directory>tests</directory>
         </testsuite>
     </testsuites>

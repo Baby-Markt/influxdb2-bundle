@@ -2,7 +2,7 @@
 
 Symfony bundle integration of the official [InfluxDB 2.x client](https://github.com/influxdata/influxdb-client-php).
 
-![Build 1.0.x](https://github.com/Baby-Markt/influxdb2-bundle/actions/workflows/php.yml/badge.svg?branch=1.0.x-dev)
+![Build 1.x](https://github.com/Baby-Markt/influxdb2-bundle/actions/workflows/php.yml/badge.svg?branch=1.x)
 [![codecov](https://codecov.io/gh/Baby-Markt/influxdb2-bundle/branch/1.0.x-dev/graph/badge.svg?token=N8MOLOBNW9)](https://codecov.io/gh/Baby-Markt/influxdb2-bundle)
 [![Packagist Version](https://img.shields.io/packagist/v/babymarkt/influxdb2-bundle)](https://packagist.org/packages/babymarkt/influxdb2-bundle)
 [![License](https://img.shields.io/github/license/Baby-Markt/influxdb2-bundle.svg)](https://github.com/Baby-Markt/influxdb2-bundle/blob/master/LICENSE)
@@ -19,7 +19,7 @@ composer require babymarkt/influxdb2-bundle
 ```
 
 If you are using [Symfony Flex](https://github.com/symfony/flex), the following will happen automatically. Otherwise,
-you have to enable the bundle on the `AppKernel` class manually:
+you have to enable the bundle on the `bundles.php` manually:
 
 ```php
 // config/bundles.php

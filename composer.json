@@ -27,6 +27,11 @@
       "Babymarkt\\Symfony\\Influxdb2Bundle\\": "src"
     }
   },
+  "autoload-dev": {
+    "psr-4": {
+      "Babymarkt\\Symfony\\Influxdb2Bundle\\Tests": "tests"
+    }
+  },
   "scripts": {
     "test": "vendor/bin/phpunit"
   }

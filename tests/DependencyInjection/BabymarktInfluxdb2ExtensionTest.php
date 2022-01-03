@@ -1,6 +1,6 @@
 <?php
 
-namespace DependencyInjection;
+namespace Babymarkt\Symfony\Influxdb2Bundle\Tests\DependencyInjection;
 
 use Babymarkt\Symfony\Influxdb2Bundle\DependencyInjection\BabymarktInfluxdb2Extension;
 use InfluxDB2\WriteType;

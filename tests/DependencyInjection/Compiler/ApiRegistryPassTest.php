@@ -1,6 +1,6 @@
 <?php
 
-namespace DependencyInjection\Compiler;
+namespace Babymarkt\Symfony\Influxdb2Bundle\Tests\DependencyInjection\Compiler;
 
 use Babymarkt\Symfony\Influxdb2Bundle\DependencyInjection\Compiler\ApiRegistryPass;
 use Babymarkt\Symfony\Influxdb2Bundle\Registry\ApiRegistry;
