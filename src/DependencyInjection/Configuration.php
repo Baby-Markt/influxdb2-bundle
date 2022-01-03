@@ -188,7 +188,7 @@ class Configuration implements ConfigurationInterface
                                                         ->info('(maxRetryTime) Maximum total retry timeout in milliseconds.')
                                                     ->end()
                                                     ->integerNode('exponential_base')
-                                                        ->info('(exponentialBase) The base for the exponential retry delay')
+                                                        ->info('(exponentialBase) The base for the exponential retry delay.')
                                                     ->end()
                                                 ->end() // children
                                             ->end() // arrayNode: options

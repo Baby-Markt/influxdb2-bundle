@@ -14,7 +14,7 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 
 #[AsCommand(
     name: 'babymarkt-influxdb2:ping',
-    description: 'Checks the status of InfluxDB instance and version of InfluxDB.'
+    description: 'Checks the status and version of an InfluxDB instance.'
 )]
 class PingCommand extends Command
 {

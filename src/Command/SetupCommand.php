@@ -110,17 +110,15 @@ class SetupCommand extends Command
         try {
             $onboardingResponse = $setupService->postSetup($onboardingRequest);
 
-            if ($onboardingResponse->getCode() === "201") {
-                $token = $onboardingResponse->getAuth()->getToken();
-                $io->success('Setup completed!');
-                $io->writeln('Token: ' . $token);
-                return 0;
-            }
+            $token = $onboardingResponse->getAuth()->getToken();
+            $io->success('Setup completed!');
+            $io->writeln('Access token: ' . $token);
+            return 0;
+
         } catch (ApiException $e) {
             $io->error($e->getResponseBody());
+            return 2;
         }
-
-        return 2;
     }
 
     /**
@@ -130,7 +128,7 @@ class SetupCommand extends Command
      */
     protected function askForUser(SymfonyStyle $io, ?string $defaultUser): string
     {
-        return (string)$io->ask('User', (string)$defaultUser, function ($user) {
+        return (string)$io->ask('User', $defaultUser, function ($user) {
             if (empty($user)) {
                 throw new \RuntimeException('You must enter a user.');
             }
@@ -146,7 +144,7 @@ class SetupCommand extends Command
     protected function askForPassword(SymfonyStyle $io, ?string $inputPassword): string
     {
         if (empty($inputPassword)) {
-            return (string) $io->askHidden('New password', function (string $password) {
+            return (string)$io->askHidden('New password', function (string $password) {
                 if (strlen($password) < 8) {
                     throw new \RuntimeException('The password must be at least 8 character long.');
                 }
