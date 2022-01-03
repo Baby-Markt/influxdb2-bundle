@@ -225,7 +225,8 @@ for these, they can be obtained at any time via a client instance and require no
 Here is an example on the ReadyService that returns the status of a InfluxDB2 instance:
 ```php
 namespace App;
-use InfluxDB2\Service\HealthService;class GenericMetricsWriter {
+use InfluxDB2\Service\ReadyService;
+class GenericMetricsWriter {
     public function __construct(protected \InfluxDB2\Client $client) {
         /** @var ReadyService $readyService */
         $readyService = $this->client->createService(ReadyService::class);
