@@ -38,6 +38,11 @@ class Configuration implements ConfigurationInterface
     }
 
     protected function addClientSection(ArrayNodeDefinition $node) {
+
+        $castToString = static function ($value) {
+            return (string) $value;
+        };
+
         $node
             ->children()
                 ->arrayNode('client')
@@ -55,14 +60,17 @@ class Configuration implements ConfigurationInterface
                                     ->end()
                                     ->scalarNode('token')
                                         ->defaultNull()
+                                        ->validate()->always($castToString)->end()
                                         ->info('Auth token.')
                                     ->end()
                                     ->scalarNode('bucket')
                                         ->isRequired()
+                                        ->validate()->always($castToString)->end()
                                         ->info('Destination bucket for writes.')
                                     ->end()
                                     ->scalarNode('org')
-                                        ->defaultNull()
+                                        ->isRequired()
+                                        ->validate()->always($castToString)->end()
                                         ->info('Organization bucket for writes.')
                                     ->end()
                                     ->scalarNode('precision')
