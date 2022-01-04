@@ -29,7 +29,8 @@ class BabymarktInfluxdb2ExtensionTest extends TestCase
     {
         $config = [
             'client' => [
-                'url' => 'http://localhost:8086'
+                'url'    => 'http://localhost:8086',
+                'bucket' => 'test'
             ]
         ];
         $this->extension->load([$config], $this->container);
@@ -56,7 +57,8 @@ class BabymarktInfluxdb2ExtensionTest extends TestCase
         $config = [
             'client' => [
                 'url'             => 'http://localhost:8086',
-                'allow_redirects' => false
+                'allow_redirects' => false,
+                'bucket'          => 'test'
             ]
         ];
         $this->extension->load([$config], $this->container);
@@ -71,7 +73,8 @@ class BabymarktInfluxdb2ExtensionTest extends TestCase
         $config = [
             'client' => [
                 'url'             => 'http://localhost:8086',
-                'allow_redirects' => true
+                'allow_redirects' => true,
+                'bucket'          => 'test'
             ]
         ];
         $this->extension->load([$config], $this->container);
@@ -86,6 +89,7 @@ class BabymarktInfluxdb2ExtensionTest extends TestCase
         $config = [
             'client' => [
                 'url'             => 'http://localhost:8086',
+                'bucket'          => 'test',
                 'allow_redirects' => [
                     'max'       => 100,
                     'strict'    => true,
@@ -112,10 +116,12 @@ class BabymarktInfluxdb2ExtensionTest extends TestCase
                 'default_connection' => 'c1',
                 'connections'        => [
                     'c1' => [
-                        'url' => 'http://localhost:8086'
+                        'url'    => 'http://localhost:8086',
+                        'bucket' => 'test'
                     ],
                     'c2' => [
-                        'url' => 'http://localhost:8086'
+                        'url'    => 'http://localhost:8086',
+                        'bucket' => 'test'
                     ]
                 ]
             ]
@@ -142,10 +148,12 @@ class BabymarktInfluxdb2ExtensionTest extends TestCase
             'client' => [
                 'connections' => [
                     'c1' => [
-                        'url' => 'http://localhost:8086'
+                        'url'    => 'http://localhost:8086',
+                        'bucket' => 'test'
                     ],
                     'c2' => [
-                        'url' => 'http://localhost:8086'
+                        'url'    => 'http://localhost:8086',
+                        'bucket' => 'test'
                     ]
                 ]
             ]
@@ -168,10 +176,12 @@ class BabymarktInfluxdb2ExtensionTest extends TestCase
                 'default_connection' => 'c2',
                 'connections'        => [
                     'c1' => [
-                        'url' => 'http://localhost:8086'
+                        'url'    => 'http://localhost:8086',
+                        'bucket' => 'test'
                     ],
                     'c2' => [
-                        'url' => 'http://localhost:8086'
+                        'url'    => 'http://localhost:8086',
+                        'bucket' => 'test'
                     ]
                 ]
             ]
@@ -190,7 +200,8 @@ class BabymarktInfluxdb2ExtensionTest extends TestCase
     {
         $config = [
             'client' => [
-                'url' => 'http://localhost:8086'
+                'url'    => 'http://localhost:8086',
+                'bucket' => 'test'
             ]
         ];
         $this->extension->load([$config], $this->container);
@@ -204,10 +215,12 @@ class BabymarktInfluxdb2ExtensionTest extends TestCase
             'client' => [
                 'connections' => [
                     'c1' => [
-                        'url' => 'http://localhost:8086'
+                        'url'    => 'http://localhost:8086',
+                        'bucket' => 'test'
                     ],
                     'c2' => [
-                        'url' => 'http://localhost:8086'
+                        'url'    => 'http://localhost:8086',
+                        'bucket' => 'test'
                     ]
                 ]
             ],

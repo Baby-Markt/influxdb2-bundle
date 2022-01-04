@@ -58,7 +58,7 @@ class Configuration implements ConfigurationInterface
                                         ->info('Auth token.')
                                     ->end()
                                     ->scalarNode('bucket')
-                                        ->defaultNull()
+                                        ->isRequired()
                                         ->info('Destination bucket for writes.')
                                     ->end()
                                     ->scalarNode('org')
