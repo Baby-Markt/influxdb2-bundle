@@ -37,7 +37,7 @@ Let's start with a minimal setup:
 
 ```yaml
 babymarkt_influxdb2:
-  clients:
+  client:
     connections:
       default:
         url: https://localhost:8086
@@ -47,7 +47,7 @@ Or in the short version:
 
 ```yaml
 babymarkt_influxdb2:
-  clients:
+  client:
     url: https://localhost:8086
 ```
 
@@ -63,7 +63,7 @@ Full configuration reference:
 babymarkt_influxdb2:
 
   # The clients will be named by connection names.
-  clients:
+  client:
     # If not set, the first connection will be taken.
     default_connection: ~
     connections:
@@ -112,7 +112,7 @@ babymarkt_influxdb2:
           referer: ~
           protocols: [ 'http', 'https' ]
 
-  apis:
+  api:
     write:
       # If not set, the first option_set will be taken.
       default_option_set: ~

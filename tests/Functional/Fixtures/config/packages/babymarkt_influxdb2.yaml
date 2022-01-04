@@ -1,0 +1,17 @@
+babymarkt_influxdb2:
+  client:
+    default_connection: client2
+    connections:
+      client1:
+        url: 'https://localhost:8086'
+      client2:
+        url: 'https://localhost:8086'
+  api:
+    write:
+      default_option_set: write2
+      option_sets:
+        write1:
+          connection: client1
+        write2:
+          connection: client2
+

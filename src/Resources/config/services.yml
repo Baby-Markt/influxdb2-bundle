@@ -7,10 +7,10 @@ services:
     resource: '../../Command/'
     tags: [ { name: console.command } ]
 
-  Babymarkt\Symfony\Influxdb2Bundle\Registry\ClientRegistry: ~
+  Babymarkt\Symfony\Influxdb2Bundle\Registry\ClientRegistry:
   babymarkt_influxdb2.client_registry: '@Babymarkt\Symfony\Influxdb2Bundle\Registry\ClientRegistry'
 
-  Babymarkt\Symfony\Influxdb2Bundle\Registry\ApiRegistry: ~
+  Babymarkt\Symfony\Influxdb2Bundle\Registry\ApiRegistry:
   babymarkt_influxdb2.api_registry: '@Babymarkt\Symfony\Influxdb2Bundle\Registry\ApiRegistry'
 
   InfluxDB2\Client: '@babymarkt_influxdb2.default_client'

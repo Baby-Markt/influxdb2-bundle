@@ -1,8 +1,8 @@
 <?php
+declare(strict_types=1);
 
 namespace Babymarkt\Symfony\Influxdb2Bundle\Command\Organizations;
 
-use Babymarkt\Symfony\Influxdb2Bundle\Command\Organizations\AbstractOrganizationsCommand;
 use InfluxDB2\ApiException;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Input\InputArgument;

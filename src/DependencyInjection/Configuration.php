@@ -4,7 +4,7 @@ declare(strict_types=1);
 namespace Babymarkt\Symfony\Influxdb2Bundle\DependencyInjection;
 
 use InfluxDB2\Model\WritePrecision;
-use Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition;
+use InfluxDB2\WriteType;use Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
 
@@ -116,7 +116,7 @@ class Configuration implements ConfigurationInterface
                     ->end() // children
                     ->beforeNormalization()
                         ->ifTrue(static function ($v) {
-                            return is_array($v) && !array_key_exists('connections', $v);
+                            return is_array($v) && !isset($v['connections']);
                         })
                         ->then(static function ($v) {
                             $excludedKeys = ['default_connection' => true];
@@ -130,6 +130,15 @@ class Configuration implements ConfigurationInterface
                             }
                             $v['default_connection'] = isset($v['default_connection']) ? (string) $v['default_connection'] : 'default';
                             $v['connections'] = [$v['default_connection'] => $connection];
+                            return $v;
+                        })
+                    ->end() // beforeNormalization
+                    ->beforeNormalization()
+                        ->ifTrue(static function ($v) {
+                            return is_array($v) && !isset($v['default_connection']) && isset($v['connections']);
+                        })
+                        ->then(static function ($v) {
+                            $v['default_connection'] = array_key_first($v['connections']);
                             return $v;
                         })
                     ->end() // beforeNormalization
@@ -158,8 +167,10 @@ class Configuration implements ConfigurationInterface
                                             ->end()
                                             ->arrayNode('options')
                                                 ->ignoreExtraKeys(remove: false)
+                                                ->addDefaultsIfNotSet()
                                                 ->children()
                                                     ->scalarNode('write_type')
+                                                        ->defaultValue(WriteType::SYNCHRONOUS)
                                                         ->info('(writeType) Type of write SYNCHRONOUS / BATCHING.')
                                                     ->end()
                                                     ->integerNode('batch_size')
@@ -191,7 +202,7 @@ class Configuration implements ConfigurationInterface
                             ->end() // children
                             ->beforeNormalization()
                                 ->ifTrue(static function ($v) {
-                                    return is_array($v) && !array_key_exists('option_sets', $v);
+                                    return is_array($v) && !isset($v['option_sets']);
                                 })
                                 ->then(static function ($v) {
                                     $excludedKeys = ['default_option_set' => true];
@@ -205,6 +216,15 @@ class Configuration implements ConfigurationInterface
                                     }
                                     $v['default_option_set'] = isset($v['default_option_set']) ? (string) $v['default_option_set'] : 'default';
                                     $v['option_sets'] = [$v['default_option_set'] => $connection];
+                                    return $v;
+                                })
+                            ->end() // beforeNormalization
+                            ->beforeNormalization()
+                                ->ifTrue(static function ($v) {
+                                    return is_array($v) && !isset($v['default_option_set']) && isset($v['option_sets']);
+                                })
+                                ->then(static function ($v) {
+                                    $v['default_option_set'] = array_key_first($v['option_sets']);
                                     return $v;
                                 })
                             ->end() // beforeNormalization

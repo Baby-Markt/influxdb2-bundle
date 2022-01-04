@@ -60,7 +60,6 @@ class BabymarktInfluxdb2Extension extends Extension
     {
         foreach ($config['connections'] as $name => $options) {
             $definition = (new Definition(class: Client::class, arguments: [$options]))
-                ->setPublic(false)
                 ->setLazy(true)
                 ->addTag(self::PREFIX . 'client');
 
@@ -71,14 +70,19 @@ class BabymarktInfluxdb2Extension extends Extension
             $this->buildQueryApiDefinition($container, $name, $serviceId);
         }
 
-        // Create the alias for the default client service.
+        // Create the alias for the default client and default query api service.
         $defaultClientId = self::PREFIX . 'default_client';
         if (!$container->hasDefinition($defaultClientId)) {
             $container->setAlias(
                 alias: $defaultClientId,
                 id: new Alias(
                     id: sprintf(self::PREFIX . '%s_client', $config['default_connection']),
-                    public: true
+                )
+            );
+            $container->setAlias(
+                alias: self::PREFIX . 'default_query_api',
+                id: new Alias(
+                    id: sprintf(self::PREFIX . '%s_query_api', $config['default_connection']),
                 )
             );
         }
@@ -95,13 +99,23 @@ class BabymarktInfluxdb2Extension extends Extension
         foreach ($config['option_sets'] as $setName => $optionSet) {
             $connectionName = $optionSet['connection'];
             $clientId       = sprintf(self::PREFIX . '%s_client', $connectionName);
-            $definition     = (new Definition(class: WriteApi::class, arguments: $optionSet['options']))
+            $definition     = (new Definition(class: WriteApi::class, arguments: [$optionSet['options']]))
                 ->setFactory([new Reference($clientId), 'createWriteApi'])
-                ->setPublic(true)
-                ->setLazy(true);
+                ->setLazy(true)
+                ->addTag(self::PREFIX . 'write_api');
 
             $serviceId = sprintf(self::PREFIX . '%s_write_api', $setName);
             $container->setDefinition($serviceId, $definition);
+        }
+
+        $defaultApiId = self::PREFIX . 'default_write_api';
+        if (!$container->has($defaultApiId)) {
+            $container->setAlias(
+                alias: $defaultApiId,
+                id: new Alias(
+                    id: sprintf(self::PREFIX . '%s_write_api', $config['default_option_set']),
+                )
+            );
         }
     }
 
@@ -116,8 +130,8 @@ class BabymarktInfluxdb2Extension extends Extension
     {
         $definition = (new Definition(QueryApi::class))
             ->setFactory([new Reference($clientServiceId), 'createQueryApi'])
-            ->setPublic(true)
-            ->setLazy(true);
+            ->setLazy(true)
+            ->addTag(self::PREFIX . 'query_api');
 
         $serviceId = sprintf(self::PREFIX . '%s_query_api', $clientName);
         $container->setDefinition($serviceId, $definition);
@@ -170,7 +184,6 @@ class BabymarktInfluxdb2Extension extends Extension
 
             // We have to convert the snake_case keys to camelCase to comply to the influxdb option keys.
             $optionSet['options'] = $this->camelizeArrayKeys($optionSet['options']);
-
         }
 
         return $config;

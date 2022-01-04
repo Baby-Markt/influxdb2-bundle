@@ -1,11 +1,11 @@
 <?php
+declare(strict_types=1);
 
 namespace Babymarkt\Symfony\Influxdb2Bundle\Command;
 
 use Babymarkt\Symfony\Influxdb2Bundle\Registry\ClientNotFoundException;
 use Babymarkt\Symfony\Influxdb2Bundle\Registry\ClientRegistry;
 use InfluxDB2\ApiException;
-use InfluxDB2\Service\PingService;
 use InfluxDB2\Service\ReadyService;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;

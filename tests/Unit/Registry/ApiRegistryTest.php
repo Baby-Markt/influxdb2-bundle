@@ -1,6 +1,7 @@
 <?php
+declare(strict_types=1);
 
-namespace Babymarkt\Symfony\Influxdb2Bundle\Tests\Registry;
+namespace Babymarkt\Symfony\Influxdb2Bundle\Tests\Unit\Registry;
 
 use Babymarkt\Symfony\Influxdb2Bundle\Registry\ApiNotFoundException;
 use Babymarkt\Symfony\Influxdb2Bundle\Registry\ApiRegistry;

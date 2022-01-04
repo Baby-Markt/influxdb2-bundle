@@ -1,6 +1,7 @@
 <?php
+declare(strict_types=1);
 
-namespace Babymarkt\Symfony\Influxdb2Bundle\Tests\DependencyInjection\Compiler;
+namespace Babymarkt\Symfony\Influxdb2Bundle\Tests\Unit\DependencyInjection\Compiler;
 
 use Babymarkt\Symfony\Influxdb2Bundle\DependencyInjection\Compiler\ApiRegistryPass;
 use Babymarkt\Symfony\Influxdb2Bundle\Registry\ApiRegistry;
@@ -30,7 +31,7 @@ class ApiRegistryPassTest extends TestCase
         $this->container->setAlias(alias: ApiRegistry::class,
             id: new Alias(
                 id: 'babymarkt_influxdb2.api_registry', public: true
-            )
+            ),
         );
 
         $this->definition = $definitionStub;

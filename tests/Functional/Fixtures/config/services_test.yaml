@@ -1,0 +1,29 @@
+services:
+  _defaults:
+    autowire: true
+    autoconfigure: true
+
+  # Requires the default client, write- and query-apis.
+  test.fakeservice.default:
+    class: Babymarkt\Symfony\Influxdb2Bundle\Tests\Functional\Fixtures\FakeService
+    public: true
+    calls:
+      - [setClient, ['@babymarkt_influxdb2.default_client']]
+      - [setQueryApi, ['@babymarkt_influxdb2.default_query_api']]
+      - [setWriteApi, ['@babymarkt_influxdb2.default_write_api']]
+
+  test.fakeservice.client1:
+    class: Babymarkt\Symfony\Influxdb2Bundle\Tests\Functional\Fixtures\FakeService
+    public: true
+    calls:
+      - [ setClient, [ '@babymarkt_influxdb2.client1_client' ] ]
+      - [ setQueryApi, [ '@babymarkt_influxdb2.client1_query_api' ] ]
+      - [ setWriteApi, [ '@babymarkt_influxdb2.write1_write_api' ] ]
+
+  test.fakeservice.client2:
+    class: Babymarkt\Symfony\Influxdb2Bundle\Tests\Functional\Fixtures\FakeService
+    public: true
+    calls:
+      - [ setClient, [ '@babymarkt_influxdb2.client2_client' ] ]
+      - [ setQueryApi, [ '@babymarkt_influxdb2.client2_query_api' ] ]
+      - [ setWriteApi, [ '@babymarkt_influxdb2.write2_write_api' ] ]

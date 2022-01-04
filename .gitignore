@@ -2,3 +2,4 @@
 vendor
 .phpunit*
 phpunit.xml
+tests/Functional/Fixtures/var
