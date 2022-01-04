@@ -2,11 +2,12 @@
 
 Symfony bundle integration of the official [InfluxDB 2.x client](https://github.com/influxdata/influxdb-client-php).
 
-![Build 1.x](https://github.com/Baby-Markt/influxdb2-bundle/actions/workflows/php.yml/badge.svg?branch=1.x)
+[![Build 1.x](https://github.com/Baby-Markt/influxdb2-bundle/actions/workflows/php.yml/badge.svg?branch=1.x)](https://github.com/Baby-Markt/influxdb2-bundle/actions)
 [![codecov](https://codecov.io/gh/Baby-Markt/influxdb2-bundle/branch/1.0.x-dev/graph/badge.svg?token=N8MOLOBNW9)](https://codecov.io/gh/Baby-Markt/influxdb2-bundle)
 [![Packagist Version](https://img.shields.io/packagist/v/babymarkt/influxdb2-bundle)](https://packagist.org/packages/babymarkt/influxdb2-bundle)
 [![License](https://img.shields.io/github/license/Baby-Markt/influxdb2-bundle.svg)](https://github.com/Baby-Markt/influxdb2-bundle/blob/master/LICENSE)
-![PHP from Packagist](https://img.shields.io/packagist/php-v/babymarkt/influxdb2-bundle)
+[![PHP from Packagist](https://img.shields.io/packagist/php-v/babymarkt/influxdb2-bundle/1.x-dev)](https://packagist.org/packages/babymarkt/influxdb2-bundle)
+[![PHP from Packagist](https://img.shields.io/github/last-commit/Baby-Markt/influxdb2-bundle/1.x)](https://github.com/Baby-Markt/influxdb2-bundle)
 
 #### Note: Use this symfony bundle with InfluxDB 2.x and InfluxDB 1.8+ ([see details on client repo](https://github.com/influxdata/influxdb-client-php/blob/master/README.md#influxdb-18-api-compatibility)).
 
