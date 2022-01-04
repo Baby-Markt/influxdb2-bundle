@@ -198,12 +198,12 @@ class SetupCommand extends Command
 
     /**
      * @param SymfonyStyle $io
-     * @param int|null $duration
+     * @param int $duration
      * @return int
      */
-    protected function askForDuration(SymfonyStyle $io, ?int $duration): int
+    protected function askForDuration(SymfonyStyle $io, int $duration): int
     {
-        return (int)$io->ask('Duration in seconds', (int)$duration, function ($v) {
+        return (int)$io->ask('Duration in seconds', (string)$duration, function ($v) {
             if (!is_numeric($v)) {
                 throw new \RuntimeException('The duration must be numeric');
             }

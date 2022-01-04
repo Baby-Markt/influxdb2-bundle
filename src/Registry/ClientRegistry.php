@@ -39,6 +39,7 @@ class ClientRegistry
     /**
      * @param string $name Client name
      * @return Client
+     * @throws ClientNotFoundException
      */
     public function getClient(string $name): Client
     {

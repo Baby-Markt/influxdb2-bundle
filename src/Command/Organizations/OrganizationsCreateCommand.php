@@ -78,7 +78,7 @@ class OrganizationsCreateCommand extends AbstractOrganizationsCommand
 
     /**
      * @param SymfonyStyle $io
-     * @param string $defaultDescription
+     * @param string|null $defaultDescription
      * @return string
      */
     protected function askForDescription(SymfonyStyle $io, ?string $defaultDescription): string

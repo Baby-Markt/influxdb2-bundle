@@ -94,7 +94,7 @@ class BucketsCreateCommand extends AbstractBucketsCommand
      */
     protected function askForRetentionRules(SymfonyStyle $io, int $defaultDuration): array
     {
-        $duration = (int)$io->ask('Duration in seconds', $defaultDuration, function ($v) {
+        $duration = (int)$io->ask('Duration in seconds', (string)$defaultDuration, function ($v) {
             if ($v < 0) {
                 throw new \RuntimeException('The duration must be >= 0.');
             }
@@ -129,7 +129,7 @@ class BucketsCreateCommand extends AbstractBucketsCommand
 
     /**
      * @param SymfonyStyle $io
-     * @param string $defaultDescription
+     * @param string|null $defaultDescription
      * @return string
      */
     protected function askForDescription(SymfonyStyle $io, ?string $defaultDescription): string
@@ -139,7 +139,7 @@ class BucketsCreateCommand extends AbstractBucketsCommand
 
     /**
      * @param SymfonyStyle $io
-     * @param string $defaultOrg
+     * @param string|null $defaultOrg
      * @return string
      */
     protected function askForOrganizationId(SymfonyStyle $io, ?string $defaultOrg): string
