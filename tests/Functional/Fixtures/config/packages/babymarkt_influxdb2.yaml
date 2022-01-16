@@ -5,9 +5,11 @@ babymarkt_influxdb2:
       client1:
         url: 'https://localhost:8086'
         bucket: 'bucket1'
+        org: 'org1'
       client2:
         url: 'https://localhost:8086'
         bucket: 'bucket2'
+        org: 'org2'
   api:
     write:
       default_option_set: write2

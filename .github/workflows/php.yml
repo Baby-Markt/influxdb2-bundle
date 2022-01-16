@@ -43,6 +43,7 @@ jobs:
       run: vendor/bin/phpunit --coverage-clover=coverage.xml
       env:
         ENABLE_SECOND_LEVEL_CACHE: 0
+        SYMFONY_DEPRECATIONS_HELPER: weak
 
     - name: Upload coverage file
       uses: actions/upload-artifact@v2

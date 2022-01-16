@@ -41,6 +41,8 @@ babymarkt_influxdb2:
     connections:
       default:
         url: https://localhost:8086
+        bucket: my-bucket
+        org: my-org
 ```
 
 Or in the short version:
@@ -49,6 +51,8 @@ Or in the short version:
 babymarkt_influxdb2:
   client:
     url: https://localhost:8086
+    bucket: my-bucket
+    org: my-org
 ```
 
 This creates the following services for you:
@@ -76,10 +80,10 @@ babymarkt_influxdb2:
         token: ~
 
         # Default destination bucket for writes.
-        bucket: ~
+        bucket: ~ # Required
 
         # Default organization bucket for writes.          
-        org: ~
+        org: ~ # Required
 
         # Precision for the unix timestamps within the body line-protocol.
         precision: 'ns'
@@ -152,7 +156,9 @@ babymarkt_influxdb2:
 ## Service usage
 
 ### Clients
-Default client injection by class name: 
+
+Default client injection by class name:
+
 ```php
 namespace App;
 class GenericMetricsWriter {
@@ -163,10 +169,11 @@ class GenericMetricsWriter {
 ```
 
 Specific clients can be retrieved by injecting via service definition:
+
 ```yaml
 services:
   App\GenericMetricsWriter:
-    arguments: ['@babymarkt_influxdb.your_client_name_client']
+    arguments: [ '@babymarkt_influxdb.your_client_name_client' ]
 ```
 
 or by getting from client registry:
@@ -184,7 +191,9 @@ class GenericMetricsWriter {
 ```
 
 ### APIs
+
 In the same way, you get the Write- and Query-APIs:
+
 ```php
 namespace App;
 class GenericMetricsWriter {
@@ -196,7 +205,9 @@ class GenericMetricsWriter {
     }
 }
 ```
+
 Specific APIs can be retrieved by injecting via service definition:
+
 ```yaml
 services:
   App\GenericMetricsWriter:
@@ -204,7 +215,9 @@ services:
       - '@babymarkt_influxdb.your_name_write_api'
       - '@babymarkt_influxdb.your_name_query_api'
 ```
+
 or by getting from API registry:
+
 ```php
 namespace App;
 use Babymarkt\Symfony\Influxdb2Bundle\Registry\ApiRegistry;
@@ -220,10 +233,12 @@ class GenericMetricsWriter {
 ```
 
 ### Additional InfluxDB2 APIs
-The official InfluxDB2 client library provides many additional API services. Although no Symfony services are defined 
+
+The official InfluxDB2 client library provides many additional API services. Although no Symfony services are defined
 for these, they can be obtained at any time via a client instance and require no further configuration.
 
 Here is an example on the ReadyService that returns the status of a InfluxDB2 instance:
+
 ```php
 namespace App;
 use InfluxDB2\Service\ReadyService;
@@ -236,14 +251,19 @@ class GenericMetricsWriter {
     }
 }
 ```
-For more information, see the [API documentation](https://docs.influxdata.com/influxdb/v2.1/reference/api/) of InfluxDB2.
+
+For more information, see the [API documentation](https://docs.influxdata.com/influxdb/v2.1/reference/api/) of
+InfluxDB2.
 
 ## Console Commands
-This bundle comes with some console commands for managing entities via the InfluxDB2 API. All commands have 
-the option `--client`|`-c` to select the InfluxDB2 client to use.
+
+This bundle comes with some console commands for managing entities via the InfluxDB2 API. All commands have the
+option `--client`|`-c` to select the InfluxDB2 client to use.
 
 ### `babymarkt_influxdb:setup`
+
 Sets up the initial user, organisation and bucket for a new instance.
+
 ```
 Options:
   -c, --client[=CLIENT]      The client to use. [default: "default"]
@@ -254,26 +274,38 @@ Options:
       --bucket[=BUCKET]      Initial bucket
       --duration[=DURATION]  Initial bucket duration [default: 0]
 ```
+
 ### `babymarkt_influxdb:ping`
+
 Checks the status and version of an InfluxDB instance.
+
 ```
 Options:
   -c, --client[=CLIENT]      The client to use. [default: "default"]
 ```
+
 ### `babymarkt_influxdb:ready`
+
 Get the readiness of an instance at startup.
+
 ```
 Options:
   -c, --client[=CLIENT]      The client to use. [default: "default"]
 ```
+
 ### `babymarkt_influxdb:buckets:list`
+
 Lists all available buckets of an instance.
+
 ```
 Options:
   -c, --client[=CLIENT]      The client to use. [default: "default"]
 ```
+
 ### `babymarkt_influxdb:buckets:retrieve`
+
 Provides all information about a bucket.
+
 ```
 Arguments:
   bucket                 The bucket name or ID.
@@ -281,8 +313,11 @@ Arguments:
 Options:
   -c, --client[=CLIENT]  The client to use. [default: "default"]
 ```
+
 ### `babymarkt_influxdb:buckets:create`
+
 Creates a new bucket.
+
 ```
 Options:
   -c, --client[=CLIENT]            The client to use. [default: "default"]
@@ -292,8 +327,11 @@ Options:
       --duration[=DURATION]        The duration in seconds for how long data will be kept in the database. 0 means infinite. [default: 0]
       --schema-type[=SCHEMA-TYPE]  The schema type. Allowed values are "implicit" or "explicit". [default: "implicit"]
 ```
+
 ### `babymarkt_influxdb:buckets:update`
+
 Updates an existing bucket.
+
 ```
 Arguments:
   bucket                           The bucket name or ID to update.
@@ -304,8 +342,11 @@ Options:
       --description[=DESCRIPTION]  The bucket description.
       --duration[=DURATION]        The duration in seconds for how long data will be kept in the database. 0 means infinite. [default: 0]
 ```
+
 ### `babymarkt_influxdb:buckets:delete`
+
 Deletes an existing bucket.
+
 ```
 Arguments:
   bucket                 The bucket name or id.
@@ -313,14 +354,20 @@ Arguments:
 Options:
   -c, --client[=CLIENT]  The client to use. [default: "default"]
 ```
+
 ### `babymarkt_influxdb:orgs:list`
+
 Lists all available organizations of an instance.
+
 ```
 Options:
   -c, --client[=CLIENT]      The client to use. [default: "default"]
 ```
+
 ### `babymarkt_influxdb:orgs:retrieve`
+
 Provides all information about an organization.
+
 ```
 Arguments:
   org                    The organization name or ID.
@@ -328,16 +375,22 @@ Arguments:
 Options:
   -c, --client[=CLIENT]  The client to use. [default: "default"]
 ```
+
 ### `babymarkt_influxdb:orgs:create`
+
 Creates a new organization.
+
 ```
 Options:
   -c, --client[=CLIENT]            The client to use. [default: "default"]
       --name[=NAME]                The organization name.
       --description[=DESCRIPTION]  The organization description.
 ```
+
 ### `babymarkt_influxdb:orgs:update`
+
 Updates an existing organization.
+
 ```
 Arguments:
   org                              The organization name or ID.
@@ -347,8 +400,11 @@ Options:
       --name[=NAME]                The organization name.
       --description[=DESCRIPTION]  The organization description.
 ```
+
 ### `babymarkt_influxdb:orgs:delete`
+
 Deletes an existing organization.
+
 ```
 Arguments:
   org                    The organization name or ID.
